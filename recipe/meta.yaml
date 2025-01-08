@@ -1,26 +1,24 @@
 {% set name = "POAP" %}
 {% set version = "0.1.26" %}
-{% set sha256 = "05d34b8075faf4bc41e1a169151f545ef3e45cfa62ec31f815fa3c06ee2dd4fb" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 05d34b8075faf4bc41e1a169151f545ef3e45cfa62ec31f815fa3c06ee2dd4fb
 
 build:
   noarch: python
   number: 1
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - python {{ python_min }}
     - setuptools
-
+    - pip
   run:
     - python >={{ python_min }}
 
